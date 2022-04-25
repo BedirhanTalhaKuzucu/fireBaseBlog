@@ -7,7 +7,6 @@ import FormHelperText from '@mui/material/FormHelperText';
 import InputLabel from '@mui/material/InputLabel';
 import { OutlinedInput, Button, Container } from '@mui/material/';
 import blog from "../assets/blok.png";
-import google from "../assets/google.png";
 import { createUser } from "../helpers/firebase"
 import { useNavigate } from 'react-router-dom';
 
@@ -15,12 +14,13 @@ function Register() {
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
+      username:"",
       email: '',
       password: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
-      createUser(values.email, values.password, navigate);
+      createUser(values.email, values.password, values.username, navigate);
       resetForm({ values: "" })
     },
   });
@@ -45,7 +45,20 @@ function Register() {
             autoComplete="off"
           >
             <FormControl>
-              <InputLabel htmlFor="email">Email</InputLabel>
+              <InputLabel htmlFor="username">UserName</InputLabel>
+              <OutlinedInput
+                id="username"
+                name="username"
+                label="username"
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                error={formik.touched.username && Boolean(formik.errors.username)}
+              />
+              <FormHelperText>{formik.touched.email && formik.errors.email}</FormHelperText>
+            </FormControl>
+
+            <FormControl>
+              <InputLabel htmlFor="email">Email*</InputLabel>
               <OutlinedInput
                 id="email"
                 name="email"
@@ -60,7 +73,7 @@ function Register() {
             </FormControl>
 
             <FormControl>
-              <InputLabel htmlFor="password">Password</InputLabel>
+              <InputLabel htmlFor="password">Password*</InputLabel>
               <OutlinedInput
                 id="password"
                 name="password"

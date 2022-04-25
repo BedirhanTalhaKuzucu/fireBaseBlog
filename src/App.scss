@@ -106,7 +106,11 @@
     .gridContainer {
       width: 100%;
       margin: auto;
-
+      .loading{
+        text-align: center;
+        margin: auto;
+        width: 15rem;
+      }
       .cardItem {
         cursor: pointer;
       }
@@ -158,5 +162,13 @@
         align-items: center;
       }
     }
+  }
+
+  .profilCard{
+    margin: 5rem auto;
+    color: white;
+    background-color:#045b75;
+    width: 30rem;
+    height: 40rem;
   }
 }

@@ -19,7 +19,7 @@ function NewBlog() {
   const { setBlogDatas } = useContext(BlogContext); 
   const navigate = useNavigate();
   var currentdate = new Date();
-  var today = "issue date :" + currentdate.getDay() + "/" + currentdate.getMonth() + "/" + currentdate.getFullYear() + "  " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+  var today = "issue date :" + currentdate.getDate() + "/" + (currentdate.getMonth()+1) + "/" + currentdate.getFullYear() + "  " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
 
   const formik = useFormik({
     initialValues: {

@@ -52,6 +52,7 @@ export default function MenuAppBar() {
           </Typography>
 
           <div>
+            {currentUser ? currentUser.displayName : "UserName"}  
             <IconButton
               size="large"
               aria-label="account of current user"

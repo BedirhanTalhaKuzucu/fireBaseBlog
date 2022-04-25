@@ -2,10 +2,9 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import 'firebaseui/dist/firebaseui.css';
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup, updateProfile } from "firebase/auth";
 import { getDatabase, ref, set, push, onValue, remove, update } from "firebase/database";
 import { toastWarnNotify, toastSuccessNotify, toastErrorNotify } from "../helpers/toastNotify";
-
 
 
 const firebaseConfig = {
@@ -16,10 +15,7 @@ const firebaseConfig = {
     storageBucket: process.env.REACT_APP_storageBucket,
     messagingSenderId: process.env.REACT_APP_messagingSenderId,
     appId: process.env.REACT_APP_appId
-  }; 
-
-
-
+};
 
 
 
@@ -27,10 +23,13 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const database = getDatabase(app);
 
-export const createUser = async (email, password, navigate) => {
+export const createUser = async (email, password, username, navigate) => {
     try {
         let userCredential = await createUserWithEmailAndPassword(auth, email, password);
         console.log(userCredential);
+        await updateProfile(auth.currentUser, {
+            displayName: username,
+        });
         navigate("/");
         toastSuccessNotify("Registered successfully!")
     } catch (error) {
@@ -43,8 +42,10 @@ export const createUser = async (email, password, navigate) => {
 export const login = async (email, password, navigate) => {
     try {
         let userCredential = await signInWithEmailAndPassword(auth, email, password);
+        setTimeout(() => {
+            toastSuccessNotify("Logged in successfully!");
+        }, 2000)
         navigate("/");
-        toastSuccessNotify("Logged in successfully!");
     } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;

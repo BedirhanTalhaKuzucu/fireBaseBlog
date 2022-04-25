@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import { useFormik } from 'formik';
 import { validationSchema } from '../helpers/formik';
@@ -8,20 +7,22 @@ import InputLabel from '@mui/material/InputLabel';
 import { OutlinedInput, Button, Container } from '@mui/material/';
 import blog from "../assets/blok.png";
 import google from "../assets/google.png";
-import {login, signUpProvider } from "../helpers/firebase"
+import { login, signUpProvider } from "../helpers/firebase"
 import { useNavigate } from 'react-router-dom';
+
 
 function Login() {
   const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values, {resetForm}) => {
-      login(values.email, values.password, navigate);
-      resetForm({values:""})
+    onSubmit: (values, { resetForm }) => {
+      login(values.email, values.password, navigate );
+      resetForm({ values: "" })
     },
   });
 
@@ -83,6 +84,7 @@ function Login() {
             </Button>
           </Box>
         </form>
+        
         <Button variant="contained" type='submit' className='google-button' onClick={handleGoogleButton} >WITH <img src={google} alt="" className='google-imagine' /></Button>
       </Container>
     </div>

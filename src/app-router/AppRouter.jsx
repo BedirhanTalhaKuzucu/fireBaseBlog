@@ -13,6 +13,7 @@ import NewBlog from "../pages/NewBlog";
 import Details from "../pages/Details"
 import UpdateBlog from '../pages/UpdateBlog';
 import PrivateRouter from './PrivateRouter';
+import PrivateRouterforLoginRegister from "./PrivateRouterforLoginRegister"
 
 function AppRouter() {
   return (
@@ -20,10 +21,14 @@ function AppRouter() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route element={<PrivateRouter />}> 
+
+        <Route element={<PrivateRouterforLoginRegister />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
+        
+        <Route element={<PrivateRouter />}>
+          <Route path="/profile" element={<Profile />} />
           <Route path="/new-blog" element={<NewBlog />} />
           <Route path="/details/:Id" element={<Details />} />
           <Route path="/updateblog/:Id" element={<UpdateBlog />} />

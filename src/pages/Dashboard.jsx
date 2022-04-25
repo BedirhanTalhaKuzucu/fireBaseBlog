@@ -16,13 +16,14 @@ import { BlogContext } from "../contexts/BlogContext";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from 'react-router-dom';
 import placeholder from "../assets/placeholder.png";
-import {toastWarnNotify, toastSuccessNotify} from "../helpers/toastNotify";
-
+import { toastSuccessNotify} from "../helpers/toastNotify";
+import loadingLogo from "../assets/loading.gif"
 
 
 export default function Dashboard() {
   const { dataArray } = useContext(BlogContext);
   const { currentUser } = useContext(AuthContext);
+  console.log(dataArray)
   const navigate = useNavigate();
 
   const handleCardClick = (id) => {
@@ -34,11 +35,23 @@ export default function Dashboard() {
     }
   }
 
+  const handleFavoriteIcon = (e, id) => {
+    e.stopPropagation();
+    dataArray.forEach((item)=> { 
+      if (item.id === id) {
+      let favoriteIndex = dataArray.indexOf(item)
+      console.log(favoriteIndex)
+
+    }})
+  }
+
   return (
     <div className='dashboard'>
       <h1>──── DASHBOARD ────</h1>
       <Grid className='gridContainer' container spacing={{ xs: 2, md: 5 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-        {dataArray?.map((data, index) => (
+        {!(dataArray) ? <img src={loadingLogo } alt=""  className="loading" />
+        :
+        dataArray?.map((data) => (
 
           <Grid item xs={6} sm={4} md={3} key={data.id} >
             <Card sx={{ maxWidth: 345 }} className="cardItem" onClick={() => handleCardClick(data.id)} >
@@ -75,8 +88,8 @@ export default function Dashboard() {
               </CardContent>
               <CardActions sx={{ display: "flex", justifyContent: "space-between" }} >
                 <div>
-                  <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
+                  <IconButton aria-label="add to favorites" value={data.id}  onClick={(e,)=>handleFavoriteIcon(e, data.id)}>
+                    <FavoriteIcon  />
                   </IconButton>
                   <IconButton aria-label="comment">
                     < ChatBubbleOutlineIcon />
@@ -92,8 +105,6 @@ export default function Dashboard() {
           </Grid>
         ))}
       </Grid>
-
-
     </div>
 
   );
