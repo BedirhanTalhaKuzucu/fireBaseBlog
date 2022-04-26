@@ -16,15 +16,17 @@ import { BlogContext } from "../contexts/BlogContext";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from 'react-router-dom';
 import placeholder from "../assets/placeholder.png";
-import { toastSuccessNotify} from "../helpers/toastNotify";
-import loadingLogo from "../assets/loading.gif"
+import { toastSuccessNotify, toastWarnNotify } from "../helpers/toastNotify";
+import loadingLogo from "../assets/loading.gif";
+import { EditUser } from "../helpers/firebase";
+
 
 
 export default function Dashboard() {
   const { dataArray } = useContext(BlogContext);
   const { currentUser } = useContext(AuthContext);
-  console.log(dataArray)
   const navigate = useNavigate();
+
 
   const handleCardClick = (id) => {
     if (currentUser) {
@@ -35,75 +37,84 @@ export default function Dashboard() {
     }
   }
 
-  const handleFavoriteIcon = (e, id) => {
+  const handleFavoriteIcon = (e, data) => {
     e.stopPropagation();
-    dataArray.forEach((item)=> { 
-      if (item.id === id) {
-      let favoriteIndex = dataArray.indexOf(item)
-      console.log(favoriteIndex)
-
-    }})
+    if (!currentUser) {
+      toastWarnNotify("please login to like")
+    } else {
+        if (data.likedUserIds) {
+          if (data.likedUserIds.includes(currentUser.uid)) {
+            EditUser({ ...data, likedUserIds: data.likedUserIds.filter((item) => !(item === currentUser.uid)) })
+            data.likedUserIds.filter((item) => !(item === currentUser.uid))
+          } else {
+            data.likedUserIds.push(currentUser.uid)
+            EditUser({ ...data, likedUserIds: data.likedUserIds })
+          }
+        } else {
+          EditUser({ ...data, likedUserIds: currentUser.uid.split(" ") })
+        }
+    }
   }
 
   return (
     <div className='dashboard'>
       <h1>──── DASHBOARD ────</h1>
       <Grid className='gridContainer' container spacing={{ xs: 2, md: 5 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-        {!(dataArray) ? <img src={loadingLogo } alt=""  className="loading" />
-        :
-        dataArray?.map((data) => (
+        {!(dataArray) ? <img src={loadingLogo} alt="" className="loading" />
+          :
+          dataArray?.map((data) => (
+            <Grid item xs={6} sm={4} md={3} key={data.id} >
+              <Card sx={{ maxWidth: 345 }} className="cardItem" onClick={() => handleCardClick(data.id)} >
+                <CardHeader
+                  avatar={
+                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                      {data.email[0].toUpperCase()}
+                    </Avatar>
+                  }
+                  action={
+                    <IconButton aria-label="settings">
+                      <MoreVertIcon />
+                    </IconButton>
+                  }
+                  title={data.title}
+                  subheader={data.date}
+                />
+                <CardMedia
+                  component="img"
+                  height="194"
+                  image={data.imgUrl}
+                  alt="resim"
+                  onError={(e) => e.target.src = placeholder}
+                />
+                <CardContent>
+                  <Typography variant="body2" color="text.secondary" sx={{
+                    display: '-webkit-box',
+                    overflow: 'hidden',
+                    WebkitBoxOrient: 'vertical',
+                    WebkitLineClamp: 3,
+                  }}>
+                    {data.content}
+                  </Typography>
+                </CardContent>
+                <CardActions sx={{ display: "flex", justifyContent: "space-between" }} >
+                  <div>
+                    <IconButton aria-label="add to favorites" value={data.id} onClick={(e) => handleFavoriteIcon(e, data)}>
+                      <FavoriteIcon style={{ color: data?.likedUserIds?.includes(currentUser.uid) ? "red" : "" }} />
+                      {data?.likedUserIds?.length}
+                    </IconButton>
+                    <IconButton aria-label="comment">
+                      < ChatBubbleOutlineIcon />
+                    </IconButton>
+                  </div>
 
-          <Grid item xs={6} sm={4} md={3} key={data.id} >
-            <Card sx={{ maxWidth: 345 }} className="cardItem" onClick={() => handleCardClick(data.id)} >
-              <CardHeader
-                avatar={
-                  <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                    {data.email[0].toUpperCase()}
-                  </Avatar>
-                }
-                action={
-                  <IconButton aria-label="settings">
-                    <MoreVertIcon />
-                  </IconButton>
-                }
-                title={data.title}
-                subheader={data.date}
-              />
-              <CardMedia
-                component="img"
-                height="194"
-                image={data.imgUrl}
-                alt="resim"
-                onError={(e) => e.target.src = placeholder}
-              />
-              <CardContent>
-                <Typography variant="body2" color="text.secondary" sx={{
-                  display: '-webkit-box',
-                  overflow: 'hidden',
-                  WebkitBoxOrient: 'vertical',
-                  WebkitLineClamp: 3,
-                }}>
-                  {data.content}
-                </Typography>
-              </CardContent>
-              <CardActions sx={{ display: "flex", justifyContent: "space-between" }} >
-                <div>
-                  <IconButton aria-label="add to favorites" value={data.id}  onClick={(e,)=>handleFavoriteIcon(e, data.id)}>
-                    <FavoriteIcon  />
-                  </IconButton>
-                  <IconButton aria-label="comment">
-                    < ChatBubbleOutlineIcon />
-                  </IconButton>
-                </div>
+                  <Typography variant="subtitle2" sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }} >
+                    <span style={{ color: "red" }}>by: </span>   {data.email}
+                  </Typography>
 
-                <Typography variant="subtitle2" sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }} >
-                  <span style={{ color: "red" }}>by: </span>   {data.email}
-                </Typography>
-
-              </CardActions>
-            </Card>
-          </Grid>
-        ))}
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
       </Grid>
     </div>
 

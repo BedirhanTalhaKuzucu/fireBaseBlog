@@ -13,7 +13,7 @@ import placeholder from "../assets/placeholder.png"
 function Details() {
   const { Id } = useParams();
   const { details } = GetDetailsData(Id);
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, handleFavoriteIcon } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleUpdateClick = (Id) => {
@@ -47,8 +47,9 @@ function Details() {
         </CardContent>
         <CardActions sx={{ display: "flex", justifyContent: "space-between" }} >
           <div>
-            <IconButton aria-label="add to favorites">
-              <FavoriteIcon />
+            <IconButton aria-label="add to favorites" onClick={(e)=>handleFavoriteIcon(e, details)}>
+              <FavoriteIcon style={{ color: details?.likedUserIds?.includes(currentUser.uid) ? "red" : "" }}/>
+              {details?.likedUserIds?.length}
             </IconButton>
             <IconButton aria-label="comment">
               < ChatBubbleOutlineIcon />

@@ -7,6 +7,7 @@ const BlogContextProvider = ({ children }) => {
   const [blogDatas, setBlogDatas] = useState();
   const [dataArray, setDataArray] = useState();
 
+
   useEffect(() => {
     getData(setDataArray);
     addNewBlog(blogDatas);

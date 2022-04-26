@@ -19,7 +19,7 @@ function NewBlog() {
   const { setBlogDatas } = useContext(BlogContext); 
   const navigate = useNavigate();
   var currentdate = new Date();
-  var today = "issue date :" + currentdate.getDate() + "/" + (currentdate.getMonth()+1) + "/" + currentdate.getFullYear() + "  " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+  var today = "issue date:" + currentdate.getDate() + "/" + (currentdate.getMonth()+1) + "/" + currentdate.getFullYear() + "  " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
 
   const formik = useFormik({
     initialValues: {
@@ -29,7 +29,8 @@ function NewBlog() {
       date: today,
       email:  "" ,
       userId: "",
-      id: ""
+      id: "",
+      likedUserIds:[""]
     },
     onSubmit: (values, { resetForm }) => {
       setBlogDatas({...values, email: currentUser ? currentUser.email : "", userId: currentUser ? currentUser.uid : "" });

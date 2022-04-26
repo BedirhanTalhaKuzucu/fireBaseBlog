@@ -32,7 +32,7 @@ function UpdateBlog() {
       date: today,
       email: state.email,
       userId: state.userId,
-      id: Id
+      id: Id,
     },
     onSubmit: (values, { resetForm }) => {
       EditUser(values);

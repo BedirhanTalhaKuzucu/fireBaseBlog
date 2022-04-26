@@ -138,7 +138,7 @@ export const DeleteUser = (id, navigate) => {
     toastWarnNotify("Blog is deleted")
 }
 
-export const EditUser = (info) => {
+export const EditUser = (info, currentUserId) => {
     if (info) {
         const db = getDatabase();
         const updates = {};
