@@ -140,6 +140,29 @@
       display: flex;
       justify-content: space-evenly;
     }
+
+    .commentArea{
+      margin: auto;
+      width: 60rem;
+      background-color: #ecebe8;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      border-radius: 10rem;
+      .commentForm{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 2rem auto;
+      }
+
+      .commentsCards{
+        width: 50%;
+        margin: auto;
+      }
+    }     
   }
 
   .updateBlog {

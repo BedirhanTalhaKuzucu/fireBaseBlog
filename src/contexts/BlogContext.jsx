@@ -6,7 +6,11 @@ export const BlogContext = createContext();
 const BlogContextProvider = ({ children }) => {
   const [blogDatas, setBlogDatas] = useState();
   const [dataArray, setDataArray] = useState();
+  const [displayComment, setDisplayComment] = useState(false)
 
+  const addComment = () => {
+    setDisplayComment(!displayComment)
+  }
 
   useEffect(() => {
     getData(setDataArray);
@@ -15,7 +19,7 @@ const BlogContextProvider = ({ children }) => {
 
 
   return (
-    <BlogContext.Provider value={{ setBlogDatas, dataArray}}>
+    <BlogContext.Provider value={{ setBlogDatas, dataArray, displayComment, setDisplayComment, addComment  }}>
       {children}
     </BlogContext.Provider>
   );

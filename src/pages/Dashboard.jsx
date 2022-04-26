@@ -20,12 +20,10 @@ import { toastSuccessNotify, toastWarnNotify } from "../helpers/toastNotify";
 import loadingLogo from "../assets/loading.gif";
 
 
-
 export default function Dashboard() {
-  const { dataArray } = useContext(BlogContext);
+  const { dataArray, addComment } = useContext(BlogContext);
   const { currentUser, handleFavoriteIcon } = useContext(AuthContext);
   const navigate = useNavigate();
-
 
   const handleCardClick = (id) => {
     if (currentUser) {
@@ -77,14 +75,15 @@ export default function Dashboard() {
                   </Typography>
                 </CardContent>
                 <CardActions sx={{ display: "flex", justifyContent: "space-between" }} >
-                  <div>
 
+                  <div>
                     <IconButton aria-label="add to favorites" value={data.id} onClick={(e) => handleFavoriteIcon(e, data)}>
                       <FavoriteIcon style={{ color: data?.likedUserIds?.includes(currentUser.uid) ? "red" : "" }} />
                       {data?.likedUserIds?.length}
                     </IconButton>
-                    <IconButton aria-label="comment">
+                    <IconButton aria-label="comment" onClick={addComment}>
                       < ChatBubbleOutlineIcon />
+                      {data?.comments?.length}
                     </IconButton>
                   </div>
 
