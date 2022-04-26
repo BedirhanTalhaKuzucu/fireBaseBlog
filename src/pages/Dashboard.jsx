@@ -78,6 +78,7 @@ export default function Dashboard() {
                 </CardContent>
                 <CardActions sx={{ display: "flex", justifyContent: "space-between" }} >
                   <div>
+
                     <IconButton aria-label="add to favorites" value={data.id} onClick={(e) => handleFavoriteIcon(e, data)}>
                       <FavoriteIcon style={{ color: data?.likedUserIds?.includes(currentUser.uid) ? "red" : "" }} />
                       {data?.likedUserIds?.length}

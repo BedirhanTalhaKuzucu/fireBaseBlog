@@ -36,6 +36,7 @@ function Details() {
         />
         <CardMedia
           component="img"
+          height="194"
           image={details ? details.imgUrl : ""}
           alt="resim"
           onError={(e) => e.target.src = placeholder }
