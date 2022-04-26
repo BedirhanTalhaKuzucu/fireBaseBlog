@@ -24,7 +24,7 @@ import { EditUser } from "../helpers/firebase";
 
 export default function Dashboard() {
   const { dataArray } = useContext(BlogContext);
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, handleFavoriteIcon } = useContext(AuthContext);
   const navigate = useNavigate();
 
 
@@ -34,25 +34,6 @@ export default function Dashboard() {
     } else {
       toastSuccessNotify("please login for details")
       navigate("/login");
-    }
-  }
-
-  const handleFavoriteIcon = (e, data) => {
-    e.stopPropagation();
-    if (!currentUser) {
-      toastWarnNotify("please login to like")
-    } else {
-        if (data.likedUserIds) {
-          if (data.likedUserIds.includes(currentUser.uid)) {
-            EditUser({ ...data, likedUserIds: data.likedUserIds.filter((item) => !(item === currentUser.uid)) })
-            data.likedUserIds.filter((item) => !(item === currentUser.uid))
-          } else {
-            data.likedUserIds.push(currentUser.uid)
-            EditUser({ ...data, likedUserIds: data.likedUserIds })
-          }
-        } else {
-          EditUser({ ...data, likedUserIds: currentUser.uid.split(" ") })
-        }
     }
   }
 
