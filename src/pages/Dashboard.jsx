@@ -18,7 +18,6 @@ import { useNavigate } from 'react-router-dom';
 import placeholder from "../assets/placeholder.png";
 import { toastSuccessNotify, toastWarnNotify } from "../helpers/toastNotify";
 import loadingLogo from "../assets/loading.gif";
-import { EditUser } from "../helpers/firebase";
 
 
 
