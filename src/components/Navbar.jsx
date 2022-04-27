@@ -5,7 +5,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from "../contexts/AuthContext";
 import { useContext } from 'react';
-import { logOut } from "../helpers/firebase";
+import { logOut } from "../helpers/authFunctions";
 
 
 export default function MenuAppBar() {

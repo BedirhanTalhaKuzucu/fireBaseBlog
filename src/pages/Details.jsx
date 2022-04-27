@@ -1,30 +1,25 @@
-import { useParams } from 'react-router-dom';
-import { GetDetailsData, DeleteUser } from "../helpers/firebase";
-import { OutlinedInput, CardActions, Button, Card, CardContent, CardMedia, CardHeader, Avatar, Typography, IconButton } from '@mui/material';
+import { useContext } from 'react';
+import { useParams, useNavigate  } from 'react-router-dom';
+import { OutlinedInput, CardActions, Button, Card, 
+CardContent, CardMedia, CardHeader, Avatar, Typography, 
+IconButton, FormControl, FormHelperText, InputLabel } from '@mui/material';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import { useContext, useState } from 'react';
-import { AuthContext } from "../contexts/AuthContext";
-import { useNavigate } from 'react-router-dom';
-import placeholder from "../assets/placeholder.png";
 import { useFormik } from 'formik';
-import { validationSchema } from '../helpers/formik';
-import FormControl from '@mui/material/FormControl';
-import FormHelperText from '@mui/material/FormHelperText';
-import InputLabel from '@mui/material/InputLabel';
+import { AuthContext } from "../contexts/AuthContext";
+import placeholder from "../assets/placeholder.png";
 import { BlogContext } from "../contexts/BlogContext";
-import { EditUser } from "../helpers/firebase";
+import { EditUser, GetDetailsData, DeleteUser } from "../helpers/dataBaseFunctions";
 import Comments from '../components/Comments';
 
 
 function Details() {
   const { Id } = useParams();
   const { details } = GetDetailsData(Id);
-  const { currentUser, handleFavoriteIcon } = useContext(AuthContext);
-  const { displayComment, addComment } = useContext(BlogContext);
+  const { currentUser } = useContext(AuthContext);
+  const { displayComment, addComment, handleFavoriteIcon } = useContext(BlogContext);
   const navigate = useNavigate();
-  // console.log( currentUser)
 
   const formik = useFormik({
     initialValues: {
@@ -54,9 +49,6 @@ function Details() {
     navigate(`/updateblog/${Id}`, { state: details })
   }
 
-
-
-
   return (
     <div className='details '>
       <h1>──── DETAİLS ────</h1>
@@ -84,7 +76,7 @@ function Details() {
         </CardContent>
         <CardActions sx={{ display: "flex", justifyContent: "space-between" }} >
           <div>
-            <IconButton aria-label="add to favorites" onClick={(e) => handleFavoriteIcon(e, details)}>
+            <IconButton aria-label="add to favorites" onClick={(e) => handleFavoriteIcon(e, details, currentUser)}>
               <FavoriteIcon style={{ color: details?.likedUserIds?.includes(currentUser.uid) ? "red" : "" }} />
               {details?.likedUserIds?.length}
             </IconButton>

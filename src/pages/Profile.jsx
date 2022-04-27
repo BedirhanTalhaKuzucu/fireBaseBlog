@@ -1,14 +1,8 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import { AuthContext } from "../contexts/AuthContext";
-import { useContext } from 'react';
-import { BlogContext } from "../contexts/BlogContext";
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState  } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {Card, CardContent, Typography} from '@mui/material/';
+import { AuthContext } from "../contexts/AuthContext";
+import { BlogContext } from "../contexts/BlogContext";
 
 
 export default function Profile() {
@@ -26,8 +20,6 @@ export default function Profile() {
       })
     )
   }, [currentUser, dataArray])
-
-  console.log(likedBlog);
 
   return (
     <Card sx={{ minWidth: 275 }} className="profilCard">
@@ -60,10 +52,7 @@ export default function Profile() {
               {item.title}
             </Typography>
           </>
-
         ))}
-
-
       </CardContent>
     </Card>
   );

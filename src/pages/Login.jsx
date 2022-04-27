@@ -1,15 +1,11 @@
 import Box from '@mui/material/Box';
 import { useFormik } from 'formik';
 import { validationSchema } from '../helpers/formik';
-import FormControl from '@mui/material/FormControl';
-import FormHelperText from '@mui/material/FormHelperText';
-import InputLabel from '@mui/material/InputLabel';
-import { OutlinedInput, Button, Container } from '@mui/material/';
+import {FormControl, FormHelperText, InputLabel, OutlinedInput, Button, Container} from '@mui/material/';
 import blog from "../assets/blok.png";
 import google from "../assets/google.png";
-import { login, signUpProvider } from "../helpers/firebase"
+import { login, signUpProvider } from "../helpers/authFunctions"
 import { useNavigate } from 'react-router-dom';
-
 
 function Login() {
   const navigate = useNavigate();

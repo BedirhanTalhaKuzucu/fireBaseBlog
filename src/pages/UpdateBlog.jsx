@@ -1,25 +1,14 @@
-import React from 'react';
-import Box from '@mui/material/Box';
 import { useFormik } from 'formik';
-import FormControl from '@mui/material/FormControl';
-import FormHelperText from '@mui/material/FormHelperText';
-import InputLabel from '@mui/material/InputLabel';
-import { OutlinedInput, Button, Container } from '@mui/material/';
-import { useContext } from 'react';
-import { BlogContext } from '../contexts/BlogContext';
+import { OutlinedInput, Button, Container, Box, FormControl, InputLabel, FormHelperText } from '@mui/material/';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { toastSuccessNotify} from "../helpers/toastNotify";
 import placeholder from "../assets/placeholder.png"
-import {EditUser} from "../helpers/firebase"
-
+import {EditUser} from "../helpers/dataBaseFunctions"
 
 function UpdateBlog() {
   const { Id } = useParams();
   const { state } = useLocation();
   const navigate = useNavigate();
-
-  // console.log(Id);
-  // console.log(state);
 
   var currentdate = new Date();
   var today = currentdate.getDate() + "/" + (currentdate.getMonth()+1) + "/" + currentdate.getFullYear() + "  " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
@@ -41,7 +30,6 @@ function UpdateBlog() {
     },
   });
 
-
   return (
     <div className='updateBlog'>
       <Container maxWidth="xs" className='updateBlogContainer'>
@@ -49,7 +37,6 @@ function UpdateBlog() {
         <h3>
           ──── UPDATE BLOG ────
         </h3>
-
         <form onSubmit={formik.handleSubmit}>
           <Box
             sx={{

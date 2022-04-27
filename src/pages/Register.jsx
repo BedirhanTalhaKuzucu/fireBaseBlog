@@ -1,13 +1,8 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
 import { useFormik } from 'formik';
 import { validationSchema } from '../helpers/formik';
-import FormControl from '@mui/material/FormControl';
-import FormHelperText from '@mui/material/FormHelperText';
-import InputLabel from '@mui/material/InputLabel';
-import { OutlinedInput, Button, Container } from '@mui/material/';
+import { OutlinedInput, Button, Container, InputLabel, FormHelperText, FormControl, Box } from '@mui/material/';
 import blog from "../assets/blok.png";
-import { createUser } from "../helpers/firebase"
+import { createUser } from "../helpers/authFunctions"
 import { useNavigate } from 'react-router-dom';
 
 function Register() {
