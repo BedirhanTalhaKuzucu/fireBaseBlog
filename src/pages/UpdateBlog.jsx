@@ -22,6 +22,8 @@ function UpdateBlog() {
       email: state.email,
       userId: state.userId,
       id: Id,
+      comments: state.comments ? state.comments : "",
+      likedUserIds: state.likedUserIds ? state.likedUserIds : ""
     },
     onSubmit: (values, { resetForm }) => {
       EditUser(values);
