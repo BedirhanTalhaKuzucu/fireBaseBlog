@@ -48,7 +48,7 @@
 To clone and run this application, you'll need [Git](https://git-scm.com) 
 ```bash
 # Clone this repository
-$ git clone https://github.com/your-user-name/your-project-name
+$ git clone https://github.com/BedirhanTalhaKuzucu/fireBaseBlog.git
 # Install dependencies
     -cd into the new folder and type
     $ npm install. 
